@@ -1,0 +1,85 @@
+<div class="item-container">
+    <h1>Order: {{orderID}}</h1>
+    <button [disabled]="orderInfo?.order.status==1?true:false" class="pagination-btn" routerLink="/create-order"
+        (click)="ChangeAddItemisVisiblePopup()">Add item</button>
+    <p class="total-price">Total Amount: {{NumberToFix(total_price,true)}}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Item name</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of listOrderedItem, let i = index">
+                <td>
+                    <b>{{item.item.item_name}}:</b>
+                    {{NumberToFix(item.item.price,true)}}
+                    <div class="toppingInfo"
+                        *ngIf="item.topping?.topping_id!=null">
+                        <div>Topping:</div>
+                        <div>+{{item.topping.topping_name}}:
+                            {{item.topping.price}}VND</div>
+                    </div>
+                </td>
+                <td>{{item.description}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{NumberToFix(item.total_price,true)}}</td>
+                <td>
+                    <button
+                        (click)="RemoveItemInOrder(i,item.item.item_name)" [disabled]="orderInfo?.order.status==1?true:false">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button (click)="UpdateOrder()"
+            [disabled]="orderInfo?.order.status==1?true:false">Update
+            Order</button>
+        <button (click)="CloseOrder(orderID)"
+            [disabled]="orderInfo?.order.status==1?true:false">Close
+            order</button>
+    </div>
+</div>
+
+<app-qrgenerator [amount]="total_price" [addtionalInformation]="'test'"></app-qrgenerator>
+
+<div class="popup-overlay" *ngIf="AddItemisVisible">
+    <div class="popup-content">
+        <span id="closePopupBtn" class="close-btn"
+            (click)="ChangeAddItemisVisiblePopup()">&times;</span>
+        <h2>Select Options</h2>
+        <form #orderForm="ngForm"
+            (ngSubmit)="Submit(itemSelect.value,toppingSelect.value,description.value,quantity.value)">
+            <div class="form-group">
+                <label for="itemSelect">Select Item:</label>
+                <select #itemSelect class="dropdown">
+                    <option *ngFor="let item of listItems,let int i"
+                        value={{item.item_id}}>{{item.item_name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="toppingSelect">Select Topping:</label>
+                <select #toppingSelect class="dropdown">
+                    <option value="no">No Topping</option>
+                    <option *ngFor="let topping of listToppings,let int i"
+                        value={{topping.topping_id}}>{{topping.topping_name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="toppingSelect">Quantity:</label>
+                <input type="number" #quantity
+                    [ngClass]="NumberToFix(quantity.value)>0?'valid':'invalid'"
+                    (ngModel)="quantity" value="1">
+            </div>
+            <div class="form-group">
+                <label for="toppingSelect">Description:</label>
+                <textarea #description></textarea>
+            </div>
+            <button class="submit-btn" type="submit">Submit</button>
+        </form>
+    </div>
+</div>

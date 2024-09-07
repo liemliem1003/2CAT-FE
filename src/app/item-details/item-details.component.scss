@@ -1,0 +1,75 @@
+/* Basic reset */
+h1, div, span, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container styling */
+.item-details-container {
+    max-width: 600px;
+    margin: 150px auto 0px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Item details styling */
+.item-details {
+    margin-bottom: 20px;
+}
+
+.item-field {
+    margin-bottom: 10px;
+}
+
+.field-label {
+    font-weight: bold;
+    display: inline-block;
+    width: 150px;
+}
+
+.field-value {
+    color: #333;
+    width: 100%;
+    padding: 10px;
+}
+
+/* Button group styling */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-btn, .delete-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}

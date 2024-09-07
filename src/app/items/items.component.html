@@ -1,0 +1,39 @@
+<div class="item-container">
+    <h1>Show All Items</h1>
+    <button class="pagination-btn" routerLink="/create-item"> Add item</button>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Stock Quantity</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of listItem">
+                <td>{{item.item_id}}</td>
+                <td>{{item.item_name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.status==1?"Active":"Inactive"}}</td>
+                <td>{{item.stock_quantity}}</td>
+                <td>{{item.category}}</td>
+                <td>
+                    <button class="edit-btn" routerLink="/item-details"
+                        [queryParams]="{ itemID: item.item_id }"
+                        routerLinkActive="active">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <div class="pagination">
+        <button class="pagination-btn" [disabled]="currentPage == 0" (click)="ChangePage(false)">Previous</button>
+        <span>Page {{currentPage+1}} of {{totalPage}}</span>
+        <button class="pagination-btn" [disabled]="currentPage == totalPage-1" (click)="ChangePage(true)">Next</button>
+    </div>
+</div>

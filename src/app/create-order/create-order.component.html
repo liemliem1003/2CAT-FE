@@ -1,0 +1,96 @@
+<div class="item-container">
+    <h1>Create New Order</h1>
+    <button class="open-popup-btn" (click)="OrderSummaryInvisiblePopup()" >Order Summary</button>
+    <p class="total-price">Total Amount: {{NumberToFix(total_price,true)}}</p>
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Item name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of listItems; let i = index">
+                <td>{{item.category}}</td>
+                <td>{{item.item_name}}</td>
+                <td>{{NumberToFix(item.price,true)}}</td>
+                <td>
+                    <button class="edit-btn" (click)="OpenAddItemPopup(item)">Add</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button class="pagination-btn" [disabled]="currentPage == 0" (click)="ChangePage(false)">Previous</button>
+        <span>Page {{currentPage+1}} of {{totalPage}}</span>
+        <button class="pagination-btn" [disabled]="currentPage == totalPage-1" (click)="ChangePage(true)">Next</button>
+    </div>
+</div>
+
+<!-- Order Summary Popup -->
+<div class="popup-overlay" *ngIf="SumaryPopupVisible">
+    <div class="popup-content">
+        <span class="close-btn" (click)="OrderSummaryInvisiblePopup()">&times;</span>
+        <h2>Order Summary</h2>
+        <p class="total-price">Total Price: {{NumberToFix(total_price,true)}} VND</p>
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listOrderedItem; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>
+                        <b>{{item.item?.item_name}}:</b> {{NumberToFix(item.item?.price,true)}}
+                        <div *ngIf="item.topping.price != 0"> - {{item.topping.topping_name}}: {{NumberToFix(item.topping.price,true)}}</div>
+                    </td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{NumberToFix(item.total_price,true)}}</td>
+                    <td><button (click)="RemoveItemInOrder(i,item.item?.item_name)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="submit-btn" (click)="CreateOrder()" [disabled]="listOrderedItem.length<=0">Create Order</button>
+    </div>
+</div>
+
+<!-- Add Item Popup -->
+<div class="popup-overlay" *ngIf="AddItemisVisible">
+    <div class="popup-content">
+        <span class="close-btn" (click)="ChangeAddItemisVisiblePopup()">&times;</span>
+        <h2>Add Item</h2>
+        <form #orderForm="ngForm" (ngSubmit)="Submit(toppingSelect.value, description.value, quantity.value)">
+            <div class="form-group">
+                <label for="itemSelect">Item:</label>
+                <input type="text" [value]="selectedItem.item_name" readonly>
+            </div>
+            <div class="form-group">
+                <label for="toppingSelect">Select Topping:</label>
+                <select #toppingSelect class="dropdown">
+                    <option value="no">No Topping</option>
+                    <option *ngFor="let topping of listToppings" [value]="topping.topping_id">
+                        {{topping.topping_name}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" #quantity [ngClass]="ConvertToNumber(quantity.value) > 0 ? 'valid' : 'invalid'" value="1">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea #description></textarea>
+            </div>
+            <button class="submit-btn" type="submit">Submit</button>
+        </form>
+    </div>
+    
+</div>

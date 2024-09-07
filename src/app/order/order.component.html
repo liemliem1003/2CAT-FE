@@ -1,0 +1,55 @@
+<div class="item-container">
+    <h1>Show All Orders</h1>
+    <button class="create-order-btn" routerLink="/create-order"> Add
+        order</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Order Number</th>
+                <th>Items</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of listOrder">
+                <td>{{order.order_id}}</td>
+                <td>
+                    <div *ngFor="let item of order.items">
+                        <div *ngIf="item.status==1 ? true : false">
+                            <b>- {{item.item_name}}:</b>
+                            {{NumberToFix(item.price,true)}} x {{item.quantity}}
+                        </div>
+                        <div *ngFor="let topping of item.toppings">
+                            <div *ngIf="topping.status==1 ? true : false">
+                                + {{topping.topping_name}}:
+                                {{NumberToFix(topping.price,true)}}
+                            </div>
+                        </div>
+                        <p></p>
+                    </div>
+                </td>
+                <td>{{convertToDDMMYYYY(order.order_date)}}</td>
+                <td>{{order.status==1?"Paid":"Unpaid"}}</td>
+                <td>{{NumberToFix(order.total_price,true)}}</td>
+                <td>
+                    <button class="edit-btn" routerLink="/order-details"
+                        [queryParams]="{ orderID: order.order_id }"
+                        routerLinkActive="active">Details</button>
+                    <button class="close-btn"
+                        (click)="CloseOrder(order.order_id)"
+                        [disabled]="order.status==1?true:false">Close</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button class="pagination-btn" [disabled]="currentPage == 0"
+            (click)="ChangePage(false)">Previous</button>
+        <span>Page {{currentPage+1}} of {{totalPage}}</span>
+        <button class="pagination-btn" [disabled]="currentPage == totalPage-1"
+            (click)="ChangePage(true)">Next</button>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="item-details-container">
+    <h1>{{item.item_name}}</h1>
+    <div class="item-details">
+        <div class="item-field">
+            <span class="field-label">Name:</span>
+            <input class="field-value" [(ngModel)]="item.item_name" [readOnly]="!isEdit">
+        </div>
+        <div class="item-field">
+            <span class="field-label">Description:</span>
+            <textarea class="field-value" [(ngModel)]="item.item_description" readonly [readOnly]="!isEdit"></textarea>
+        </div>
+        <div class="item-field">
+            <span class="field-label">Price:</span>
+            <input type="number" class="field-value" [(ngModel)]="item.price" readonly [readOnly]="!isEdit">
+        </div>
+        <div class="item-field">
+            <span class="field-label">Stock Quantity:</span>
+            <input type="number" class="field-value" [(ngModel)]="item.stock_quantity" readonly [readOnly]="!isEdit">
+        </div>
+        <div class="item-field">
+            <span class="field-label">Category:</span>
+            <input class="field-value" readonly [(ngModel)]="item.category" [readOnly]="!isEdit">
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button class="edit-btn" (click)="Edit()">{{isEdit?'Update':'Edit Item'}}</button>
+        <button class="delete-btn" (click)="UpdateStatus()" >{{item.status==1?"Deativate":"Activate"}}</button>
+    </div>
+</div>

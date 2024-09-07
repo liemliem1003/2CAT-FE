@@ -1,0 +1,64 @@
+<div class="order-details">
+    <h1>Order Details</h1>
+    <div class="table-number">
+        <h2>Table Number: 5</h2>
+    </div>
+    <div class="items">
+        <h3>Items</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price per Item</th>
+                    <th>Total Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Item 1</td>
+                    <td>2</td>
+                    <td>$10.00</td>
+                    <td>$20.00</td>
+                    <td><Button (click)="ChangeAddItemisVisiblePopup()">Edit</Button></td>
+                </tr>
+                <tr>
+                    <td>Item 2</td>
+                    <td>1</td>
+                    <td>$15.00</td>
+                    <td>$15.00</td>
+                    <td><Button (click)="ChangeAddItemisVisiblePopup()">Edit</Button></td>
+                </tr>
+                <tr>
+                    <td>Item 3</td>
+                    <td>3</td>
+                    <td>$5.00</td>
+                    <td>$15.00</td>
+                    <td><Button (click)="ChangeAddItemisVisiblePopup()">Edit</Button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="addItemBtn" (click)="ChangeAddItemisVisiblePopup()"   >Add Item</button>
+        <button id="PaymentBtn" (click)="ChangePaymentVisiblePopup()">Payment</button>
+    </div>
+    <div class="total-price">
+        <h3>Total Price: $50.00</h3>
+    </div>
+</div>
+
+<div class="popup-overlay" *ngIf="AddItemisVisible">
+    <div class="popup-content">
+      <button class="close-btn" (click)="ChangeAddItemisVisiblePopup()">X</button>
+      <h2>Add/Edit Item</h2>
+      <p>Your popup content goes here.</p>
+    </div>
+  </div>
+
+  <div class="popup-overlay" *ngIf="PaymentVisible">
+    <div class="popup-content">
+      <button class="close-btn" (click)="ChangePaymentVisiblePopup()">X</button>
+      <h2>Payment</h2>
+      <p>Your popup content goes here.</p>
+    </div>
+  </div>
